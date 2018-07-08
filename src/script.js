@@ -17,10 +17,10 @@ const roboAdvisor = data => {
         maximumProfit = { lowEnd: 0, highStart: 0 }
     } else {
         const targets = getTargets(collection, item => item == min || item == max)
-        const possibilities = getPossibilities(targets, min, max, data.length);
+        const possibilities = getPossibilities(targets, min, max);
         maximumProfit = getMaximumProfit(possibilities);
     }
-    return `${max - min}, ${formatTime(maximumProfit.lowEnd)}, ${formatTime(maximumProfit.highStart)}`
+    return `${maximumProfit.profit}, ${formatTime(maximumProfit.lowEnd)}, ${formatTime(maximumProfit.highStart)}`
 }
 
 console.log(roboAdvisor(data))

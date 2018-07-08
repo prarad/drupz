@@ -21,7 +21,7 @@ it('should return correct minimum and maximum', () => {
     expect(max).toBe(20);
 })
 
-describe('collection related', () => {
+describe('related to collection', () => {
     let expectedOutput;
 
     beforeEach(() => {
@@ -42,7 +42,7 @@ describe('collection related', () => {
         expect(collection).toEqual(expectedOutput);
     })
 
-    it('should return collected shares with 2 low price', () => {
+    it('should return collected shares with 2 low prices', () => {
         expectedOutput[5].end = 358;
         expectedOutput.splice(6, 0, { price: 5, start: 359 });
         data[359] = 5
@@ -64,9 +64,9 @@ describe('collection related', () => {
         const items = expectedOutput;
         const { min, max } = getMinAndMax(items.map(item => item.price));
         const targets = getTargets(items, item => item == min || item == max);
-        const possibilities = getPossibilities(targets, min, max, data.length);
+        const possibilities = getPossibilities(targets, min, max);
         expect(possibilities).toEqual([
-            { lowEnd: 179, highStart: 360, interval: 181 }
+            { lowEnd: 179, highStart: 360, interval: 181, profit: 6 }
         ])
     })
 
