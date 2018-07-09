@@ -19,15 +19,25 @@ export const collector = data => {
 }
 
 export const getMinAndMax = items => {
-    let max = { val: Math.max(...items) };
-    max.index = items.indexOf(max.val);
-    let min = items[0];
-    for (let i = 1; i < max.index; i++) {
-        if (min > items[i]) {
-            min = items[i];
+    let possibilities = [];
+    for (let i = items.length - 1; i >= 0; i--) {
+        for (let j = i - 1; j >= 0; j--) {
+            possibilities.push({
+                profit: items[i] - items[j],
+                low: items[j],
+                lowIndex: j,
+                high: items[i]
+            })
         }
     }
-    return { min, max: max.val }
+    let [res] = possibilities.filter((item, _, arr) => {
+        return (
+            item.profit == Math.max(...arr.map(item => item.profit))
+            &&
+            item.profit >= 0
+        )
+    }).sort((a, b) => a.lowIndex - b.lowIndex)
+    return !!res ? { min: res.low, max: res.high } : { min: 0, max: 0 }
 }
 
 export const getTargets = (items, condition) => items.filter(item => condition(item.price))
